@@ -8,16 +8,12 @@ var loadResult = function(){
 	new Element('iframe', {
 		'src': show_src,
 		'styles': {
-			'height': height
+			'height': '480px'
 		}
 	}).inject(document.id('result'));
 };
 
 this.switchTab = function(action, index, trigger){
-    document.getElements('#result iframe').each(function(el){
-        console.log('Deleting style : ' + el);
-        el.style = "";
-    });
 	var actionParent = this.actions.getParent();
 	this.sections.removeClass('active');
 	this.sections[index].addClass('active');
