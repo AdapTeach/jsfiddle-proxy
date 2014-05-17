@@ -32,13 +32,15 @@ app.listen(app.get('port'), function() {
 app.get('/fiddle/:id',function(req,res){
 
     console.log(req.headers['user-agent']);
-
-    // Set up the request
-    http.get('http://jsfiddle.net/AdapTeach/' + req.params.id + '/', function(res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
+    var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
+    if(req.headers['user-agent'].indexOf('PhantomJS') !== -1){
+        url += "embedded/";
+    }
+    http.get(url, function(response) {
+        response.setEncoding('utf8');
+        response.on('data', function (chunk) {
+            res.send(chunk);
         });
     });
-
 
 });
