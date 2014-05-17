@@ -14,7 +14,10 @@ var loadResult = function(){
 };
 
 this.switchTab = function(action, index, trigger){
-    loadResult();
+    document.getElements('#result iframe').each(function(el){
+        console.log('Deleting style : ' + el);
+        el.style = "";
+    });
 	var actionParent = this.actions.getParent();
 	this.sections.removeClass('active');
 	this.sections[index].addClass('active');
