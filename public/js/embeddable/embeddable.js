@@ -14,6 +14,7 @@ var loadResult = function(){
 };
 
 this.switchTab = function(action, index, trigger){
+    loadResult();
 	var actionParent = this.actions.getParent();
 	this.sections.removeClass('active');
 	this.sections[index].addClass('active');
