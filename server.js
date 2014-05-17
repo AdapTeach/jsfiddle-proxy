@@ -31,16 +31,17 @@ app.listen(app.get('port'), function() {
 
 app.get('/fiddle/:id',function(req,res){
 
-    console.log(req.headers['user-agent']);
     var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
     if(req.headers['user-agent'].indexOf('PhantomJS') !== -1){
         url += "embedded/";
     }
-    http.get(url, function(response) {
-        response.setEncoding('utf8');
-        response.on('data', function (chunk) {
-            res.send(chunk);
-        });
-    });
+    http.get(url,function(response){
+        var html = ''
+        response.on('data',function(data){
+            html += data;
+        }).on('end',function(){
+            res.end(html);
+        })
+    })
 
 });
