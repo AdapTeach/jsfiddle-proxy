@@ -1,0 +1,27 @@
+{
+    "name": "fiddleProxy",
+    "version": "0.0.1",
+    "description": "proxy !!",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "keywords": [
+        "jsfiddle"
+    ],
+    "author": {
+        "name": "charl---",
+        "email": "charles.jacquin@autistici.org"
+    },
+    "contributors": [
+        "Charles Jacquin"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "express": "~3.4.2"
+    }
+}
