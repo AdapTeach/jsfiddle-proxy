@@ -29,12 +29,17 @@ app.listen(app.get('port'), function() {
     console.log("API listening on port " + app.get('port'));
 });
 
-app.get('/fiddle/:id',function(req,res){
+app.get('/fiddle/:id/:tabs',function(req,res){
 
     var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
-    if(req.headers['user-agent'].indexOf('PhantomJS') !== -1){
-        url += "embedded/";
+    if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
+        url += "embedded/"+req.params.tabs+'/';
+        if(req.query.presentation){
+            url += 'presentation/'
+        }
     }
+
+    console.log(req.params.tabs,  url)
     http.get(url,function(response){
         var html = ''
         response.on('data',function(data){
