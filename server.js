@@ -30,12 +30,12 @@ app.listen(app.get('port'), function() {
 
 app.get('/fiddle/:id/:tabs',function(req,res){
     var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
-//    if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
-//        url += "embedded/"+req.params.tabs+'/';
-//        if(req.query.presentation){
-//            url += 'presentation/'
-//        }
-//    }
+    if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
+        url += "embedded/"+req.params.tabs+'/';
+        if(req.query.presentation){
+            url += 'presentation/'
+        }
+    }
     http.get(url,function(response){
         var html = ''
         response.on('data',function(data){
