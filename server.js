@@ -10,9 +10,8 @@ app.configure(function() {
     app.use(express.methodOverride());
     app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization')
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE')
-        //res.header("Access-Control-Allow-Headers", 'Authorization");
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type')
+        res.header('Access-Control-Allow-Methods', 'GET')
         next();
     });
     app.use(app.router);
@@ -30,16 +29,13 @@ app.listen(app.get('port'), function() {
 });
 
 app.get('/fiddle/:id/:tabs',function(req,res){
-
     var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
-    if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
-        url += "embedded/"+req.params.tabs+'/';
-        if(req.query.presentation){
-            url += 'presentation/'
-        }
-    }
-
-    console.log(req.params.tabs,  url)
+//    if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
+//        url += "embedded/"+req.params.tabs+'/';
+//        if(req.query.presentation){
+//            url += 'presentation/'
+//        }
+//    }
     http.get(url,function(response){
         var html = ''
         response.on('data',function(data){

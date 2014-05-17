@@ -308,3 +308,11 @@ legend { display: none; }
 #job h4 { font-weight: 800; margin-bottom: 7px; }
 #job h5 { margin-bottom: 2px; color: #39464e; }
 #job p { margin-bottom: 0; color: #39464e; }
+
+#sidebar, #header{
+    display : none;
+}
+
+#content{
+    margin-left : 15px;
+}
