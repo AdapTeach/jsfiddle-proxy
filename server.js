@@ -10,8 +10,8 @@ app.configure(function() {
     app.use(express.methodOverride());
     app.use(function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
-        res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type')
-        res.header('Access-Control-Allow-Methods', 'GET')
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+        res.header('Access-Control-Allow-Methods', 'GET');
         next();
     });
     app.use(app.router);
@@ -28,21 +28,32 @@ app.listen(app.get('port'), function() {
     console.log("API listening on port " + app.get('port'));
 });
 
-app.get('/fiddle/:id/:tabs',function(req,res){
-    var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
-    if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
-        url += "embedded/"+req.params.tabs+'/';
-        if(req.query.presentation){
-            url += 'presentation/'
-        }
-    }
-    http.get(url,function(response){
-        var html = ''
-        response.on('data',function(data){
-            html += data;
-        }).on('end',function(){
-            res.end(html);
-        })
-    })
+var fiddles;
 
+app.get('/fiddle/:id/:tabs',function(req,res){
+    if(!fiddles[req.params.id]){
+        var url = 'http://jsfiddle.net/AdapTeach/' + req.params.id + '/';
+        if(req.headers['user-agent'].indexOf('PhantomJS') == -1){
+            url += "embedded/"+req.params.tabs+'/';
+            if(req.query.presentation){
+                url += 'presentation/'
+            }
+        }
+        http.get(url,function(response){
+            var html = '';
+            response.on('data',function(data){
+                html += data;
+            }).on('end',function(){
+                fiddles[req.params.id] = html;
+                res.end(html);
+            })
+        })
+    }else{
+        res.end(fiddles[req.params.id]);
+    }
+});
+
+app.get('/cleanCache',function(req,res){
+   fiddles = undefined;
+    res.end()
 });
